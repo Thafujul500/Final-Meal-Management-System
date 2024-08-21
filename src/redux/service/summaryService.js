@@ -5,10 +5,9 @@ import { apiService } from "../api/apiService";
 const summaryService = apiService.injectEndpoints({
   endpoints: (builder) => ({
     getSummary: builder.query({
-      query: (postBody) => ({
-        url: "summary",
+      query: (page) => ({
+        url: `summary?page=${page}&limit=${10}`,
         method: "GET",
-        body: postBody,
       }),
     }),
   }),

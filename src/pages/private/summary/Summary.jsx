@@ -6,10 +6,13 @@ import dayjs from "dayjs";
 import Loading from "../../Loading";
 
 export const Summary = () => {
+  const [pageQuery, setPageQuery] = React.useState(1);
+
   // get summary
-  const { data, isLoading, isError } = useGetSummaryQuery();
+  const { data, isLoading, isError } = useGetSummaryQuery(pageQuery);
+  const pagination = data?.data?.pagination;
+
   const value = data?.data?.data;
-  console.log(value);
   // get member
   const { data: memberData } = useGetMemberQuery();
   // console.log(memberData?.data?.data);
@@ -70,7 +73,15 @@ export const Summary = () => {
     <div>
       <h1 style={{ textAlign: "center", marginTop: "20px" }}>Summary</h1>
       {isLoading && <Loading />}
-      {data && <Table column={column} value={value || []} />}
+      {data && (
+        <Table
+          column={column}
+          value={value || []}
+          setPageQuery={setPageQuery}
+          pageQuery={pageQuery}
+          pagination={pagination}
+        />
+      )}
       {isError && (
         <p style={{ textAlign: "center", marginTop: "20px" }}>
           There is an error{" "}

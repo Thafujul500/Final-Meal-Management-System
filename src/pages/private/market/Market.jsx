@@ -14,10 +14,13 @@ import { Typography } from "@mui/material";
 import Loading from "../../Loading";
 
 export const Market = () => {
+  const [pageQuery, setPageQuery] = React.useState(1);
+
   // get market
-  const { data, isLoading, isError } = useGetMarketQuery();
+  const { data, isLoading, isError } = useGetMarketQuery(pageQuery);
   const value = data?.data?.data;
-  // console.log(value);
+  const pagination = data?.data?.pagination;
+
   // get member
   const { data: memberData } = useGetMemberQuery();
   // delete market
@@ -147,7 +150,15 @@ export const Market = () => {
           Add Market
         </Button>
       )}
-      {data && <Table value={value || []} column={column} />}
+      {data && (
+        <Table
+          value={value || []}
+          column={column}
+          setPageQuery={setPageQuery}
+          pageQuery={pageQuery}
+          pagination={pagination}
+        />
+      )}
       {isError && (
         <p style={{ textAlign: "center", marginTop: "20px" }}>
           Thate is an error

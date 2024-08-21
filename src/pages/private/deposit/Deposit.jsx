@@ -1,7 +1,7 @@
 import * as React from "react";
 import {
   useDeleteDepositMutation,
-  useGetDepositQuery,
+  useFindDepositQuery,
 } from "../../../redux/service/depositService";
 import Table from "../../../components/Table";
 import dayjs from "dayjs";
@@ -13,10 +13,11 @@ import Button from "@mui/material/Button";
 import Loading from "../../Loading";
 
 export const Deposit = () => {
+  const [pageQuery, setPageQuery] = React.useState(1);
   // get deposit
-  const { data, isLoading, isError } = useGetDepositQuery();
+  const { data, isLoading, isError } = useFindDepositQuery(pageQuery);
   const value = data?.data?.data;
-  console.log(value);
+  const pagination = data?.data?.pagination;
 
   // get member
   const { data: memberData } = useGetMemberQuery();
@@ -42,7 +43,6 @@ export const Deposit = () => {
   //handleCreateHandeler
   const handleCreateHandeler = () => {
     console.log("Hellow");
-
     setDefaultValues(defaultValue);
     setEdit(false);
     setTitleName("Create");
@@ -137,7 +137,15 @@ export const Deposit = () => {
           Add Deposit
         </Button>
       )}
-      {data && <Table value={value || []} column={column} />}
+      {data && (
+        <Table
+          value={value || []}
+          column={column}
+          setPageQuery={setPageQuery}
+          pageQuery={pageQuery}
+          pagination={pagination}
+        />
+      )}
 
       {isError && (
         <p style={{ textAlign: "center", marginTop: "20px" }}>

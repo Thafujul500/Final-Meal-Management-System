@@ -5,10 +5,9 @@ import { apiService } from "../api/apiService";
 export const mealSearvice = apiService.injectEndpoints({
   endpoints: (builder) => ({
     getMeal: builder.query({
-      query: (postBody) => ({
-        url: "meal",
+      query: (page) => ({
+        url: `meal?page=${page}&limit=${10}`,
         method: "GET",
-        body: postBody,
       }),
     }),
 

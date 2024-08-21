@@ -5,10 +5,9 @@ import { apiService } from "../api/apiService";
 export const memberService = apiService.injectEndpoints({
   endpoints: (builder) => ({
     getMember: builder.query({
-      query: (postBody) => ({
-        url: "member",
+      query: (page) => ({
+        url: `member?page=${page}&limit=${10}`,
         method: "GET",
-        body: postBody,
       }),
     }),
   }),

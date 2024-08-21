@@ -5,8 +5,10 @@ import dayjs from "dayjs";
 import Loading from "../Loading";
 
 function Member() {
-  const { data, isLoading, isError } = useGetMemberQuery();
+  const [pageQuery, setPageQuery] = React.useState(1);
+  const { data, isLoading, isError } = useGetMemberQuery(pageQuery);
   const value = data?.data?.data;
+  const pagination = data?.data?.pagination;
 
   let column = [
     {
@@ -54,7 +56,15 @@ function Member() {
 
       {isLoading && <Loading />}
 
-      {data && <Table value={value || []} column={column} />}
+      {data && (
+        <Table
+          value={value || []}
+          column={column}
+          setPageQuery={setPageQuery}
+          pageQuery={pageQuery}
+          pagination={pagination}
+        />
+      )}
 
       {isError && (
         <p style={{ textAlign: "center", marginTop: "20px" }}>

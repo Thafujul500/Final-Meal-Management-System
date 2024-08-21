@@ -3,13 +3,13 @@ import { apiService } from "../api/apiService";
 
 export const depositService = apiService.injectEndpoints({
   endpoints: (builder) => ({
-    getDeposit: builder.query({
-      query: (postBody) => ({
-        url: "deposit",
+    findDeposit: builder.query({
+      query: (page) => ({
+        url: `deposit?page=${page}&limit=${10}`,
         method: "GET",
-        body: postBody,
       }),
     }),
+
     createDeposit: builder.mutation({
       query: ({ postBody }) => ({
         url: "deposit",
@@ -66,8 +66,8 @@ export const depositService = apiService.injectEndpoints({
 });
 
 export const {
-  useGetDepositQuery,
   useCreateDepositMutation,
   useDeleteDepositMutation,
   useUpdateDepositMutation,
+  useFindDepositQuery,
 } = depositService;

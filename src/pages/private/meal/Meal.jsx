@@ -15,10 +15,13 @@ import MealCreateUpdate from "./MealCreateUpdate";
 import Loading from "../../Loading";
 
 function Meal() {
+  const [pageQuery, setPageQuery] = React.useState(1);
+
   // get meal
-  const { data, isLoading, isError } = useGetMealQuery();
+  const { data, isLoading, isError } = useGetMealQuery(pageQuery);
   const value = data?.data?.data;
-  // console.log(value);
+  const pagination = data?.data?.pagination;
+
   const member = value?.map((x) => {
     return x?.member;
   });
@@ -157,7 +160,15 @@ function Meal() {
           Add Meal
         </Button>
       )}
-      {data && <Table column={column} value={value || []} />}
+      {data && (
+        <Table
+          column={column}
+          value={value || []}
+          setPageQuery={setPageQuery}
+          pageQuery={pageQuery}
+          pagination={pagination}
+        />
+      )}
       {isError && (
         <p style={{ textAlign: "center", marginTop: "20px" }}>
           There is an error{" "}

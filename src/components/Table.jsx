@@ -10,7 +10,9 @@ import LocalPrintshopIcon from "@mui/icons-material/LocalPrintshop";
 import DownloadIcon from "@mui/icons-material/Download";
 import * as XLSX from "xlsx";
 
-const Table = ({ value, column }) => {
+const Table = ({ value, column, pageQuery, setPageQuery, pagination }) => {
+  console.log(pagination);
+
   const columns = useMemo(() => column, [column]);
   const data = useMemo(() => value, [value]);
 
@@ -108,7 +110,7 @@ const Table = ({ value, column }) => {
         {...getTableProps()}
       >
         <thead>
-          {headerGroups.map((headerGroup) => (
+          {headerGroups?.map((headerGroup) => (
             <tr
               style={{ height: "50px" }}
               {...headerGroup.getHeaderGroupProps()}
@@ -123,7 +125,7 @@ const Table = ({ value, column }) => {
           style={{ backgroundColor: "#D1E7DD", textAlign: "center" }}
           {...getTableBodyProps()}
         >
-          {page.map((row) => {
+          {page?.map((row) => {
             prepareRow(row);
             return (
               <tr style={{ height: "50px" }} {...row.getRowProps()}>
@@ -135,7 +137,7 @@ const Table = ({ value, column }) => {
           })}
         </tbody>
         <tfoot>
-          {footerGroups.map((footerGroup) => (
+          {footerGroups?.map((footerGroup) => (
             <tr {...footerGroup.getFooterGroupProps()}>
               {footerGroup.headers.map((column) => (
                 <td {...column.getFooterProps()}>{column.render("Footer")}</td>
@@ -147,17 +149,21 @@ const Table = ({ value, column }) => {
 
       <Stack sx={{ marginTop: "20px", display: "flex", flexDirection: "row" }}>
         <Stack sx={{ marginTop: "5px", marginRight: "10px" }}>
-          Page {pageIndex + 1} of {pageOptions.length} Go to page :{" "}
+          <p>
+            {" "}
+            Page {pageQuery} of {pagination?.totalPage} ; Go to page :{" "}
+          </p>
         </Stack>
         <TextField
           id="outlined-basic"
-          defaultValue={pageIndex + 1}
           variant="standard"
           size="small"
           type="number"
+          disabled={pagination?.totalPage === 1}
           onChange={(e) => {
-            const pageNumber = e.target.value ? Number(e.target.value) - 1 : 0;
-            gotoPage(pageNumber);
+            // const pageNumber = e.target.value ? Number(e.target.value) - 1 : 1;
+            // gotoPage(pageNumber);
+            setPageQuery(e.target.value);
           }}
         />
       </Stack>
@@ -165,32 +171,36 @@ const Table = ({ value, column }) => {
       <Stack sx={{ display: "flex", flexDirection: "row", marginTop: "10px" }}>
         <Button
           variant="contained"
-          onClick={() => gotoPage(0)}
-          disabled={!canPreviousPage}
+          onClick={() => setPageQuery(1)}
+          disabled={pageQuery === 1}
           sx={{ marginRight: "5px" }}
         >
           {"<<"}
         </Button>
         <Button
           variant="contained"
-          onClick={previousPage}
-          disabled={!canPreviousPage}
+          onClick={() => {
+            setPageQuery(pageQuery - 1);
+          }}
+          disabled={pageQuery === 1}
           sx={{ marginRight: "5px" }}
         >
           Previous
         </Button>
         <Button
           variant="contained"
-          onClick={nextPage}
-          disabled={!canNextPage}
+          onClick={() => {
+            setPageQuery(pageQuery + 1);
+          }}
+          disabled={pageQuery === pagination?.totalPage}
           sx={{ marginLeft: "5px" }}
         >
           Next
         </Button>
         <Button
           variant="contained"
-          onClick={() => gotoPage(pageCount - 1)}
-          disabled={!canNextPage}
+          onClick={() => setPageQuery(pagination?.totalPage)}
+          disabled={pageQuery === pagination?.totalPage}
           sx={{ marginLeft: "5px" }}
         >
           {">>"}
