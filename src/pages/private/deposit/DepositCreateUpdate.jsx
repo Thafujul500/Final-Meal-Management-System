@@ -63,7 +63,6 @@ const DepositCreateUpdate = ({
   });
 
   const onSubmit = (value) => {
-    console.log(value);
     if (edit) {
       const updateData = {
         member: value?.member,

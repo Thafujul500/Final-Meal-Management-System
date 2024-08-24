@@ -12,19 +12,21 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import MarketCreateUpdate from "./MarketCreateUpdate";
 import { Typography } from "@mui/material";
 import Loading from "../../Loading";
+import Swal from "sweetalert2";
 
 export const Market = () => {
   const [pageQuery, setPageQuery] = React.useState(1);
 
   // get market
-  const { data, isLoading, isError } = useGetMarketQuery(pageQuery);
+  const { data, isLoading, isError } = useGetMarketQuery();
   const value = data?.data?.data;
+
   const pagination = data?.data?.pagination;
 
   // get member
   const { data: memberData } = useGetMemberQuery();
   // delete market
-  const [deleteMarket] = useDeleteMarketMutation();
+  const [deleteMarket, { isSuccess }] = useDeleteMarketMutation();
   // handle open moda
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -50,11 +52,33 @@ export const Market = () => {
   };
   // handleUpdateMarket
   const handleUpdateMarket = (data) => {
-    console.log(data);
+    // console.log(data);
     setDefaultvalues(data);
     setEditData(true);
     setTitleName("Update");
     handleOpen();
+  };
+
+  const handleDeleteClick = (value) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteMarket(value);
+
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
+      }
+    });
   };
 
   // action column
@@ -69,12 +93,14 @@ export const Market = () => {
         />
         <DeleteIcon
           sx={{ marginLeft: "5px" }}
-          onClick={() => deleteMarket(row?.original?._id)}
+          onClick={() => {
+            handleDeleteClick(row?.original?._id);
+          }}
         />
       </div>
     );
   };
-
+  // deleteMarket(row?.original?._id)
   // column
   const column = [
     {

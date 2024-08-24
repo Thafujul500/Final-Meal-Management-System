@@ -11,7 +11,7 @@ import DownloadIcon from "@mui/icons-material/Download";
 import * as XLSX from "xlsx";
 
 const Table = ({ value, column, pageQuery, setPageQuery, pagination }) => {
-  console.log(pagination);
+  // console.log(pagination);
 
   const columns = useMemo(() => column, [column]);
   const data = useMemo(() => value, [value]);

@@ -5,33 +5,38 @@ import { apiService } from "../api/apiService";
 export const marketService = apiService.injectEndpoints({
   endpoints: (builder) => ({
     getMarket: builder.query({
-      query: (page) => ({
-        url: `market?page=${page}&limit=${10}`,
+      query: () => ({
+        url: "market",
         method: "GET",
       }),
     }),
 
-    // crate Market
-    crateMarket: builder.mutation({
+    // crete cache update
+    creteMarket: builder.mutation({
       query: ({ postBody }) => ({
         url: "market",
         method: "POST",
         body: postBody,
       }),
-    }),
-
-    onQueryStarted(postBody, { dispatch, queryFulfilled }) {
-      queryFulfilled.then(({ data }) => {
-        console.log(data);
-
-        dispatch(
-          apiService.util.updateQueryData("getMarket", undefined, (draft) => {
-            draft.unshift(data?.data);
-            return draft;
+      // cash update
+      onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+        queryFulfilled
+          .then(({ data }) => {
+            dispatch(
+              apiService.util.updateQueryData(
+                "getMarket",
+                undefined,
+                (draft) => {
+                  draft?.data?.data?.unshift(data?.data?.market);
+                }
+              )
+            );
           })
-        );
-      });
-    },
+          .catch((error) => {
+            console.log("error", error);
+          });
+      },
+    }),
 
     // update Market
     updateMarket: builder.mutation({
@@ -40,21 +45,26 @@ export const marketService = apiService.injectEndpoints({
         method: "PUT",
         body: postBody,
       }),
-
-      onQueryStarted({ id }, { dispatch, queryFulfilled }) {
-        queryFulfilled.then(({ data }) => {
-          console.log("data", data);
-
-          dispatch(
-            apiService.util.updateQueryData("getMarket", undefined, (draft) => {
-              const finindex = draft?.data?.data?.find(
-                (item) => item?._id === id
-              );
-              draft[finindex] = data?.data;
-              return draft;
-            })
-          );
-        });
+      onQueryStarted({ id, postBody }, { dispatch, queryFulfilled }) {
+        queryFulfilled;
+        queryFulfilled
+          .then(({ data }) => {
+            dispatch(
+              apiService.util.updateQueryData(
+                "getMarket",
+                undefined,
+                (draft) => {
+                  let findIndex = draft?.data?.data?.findIndex(
+                    (item) => item._id === id
+                  );
+                  draft.data.data[findIndex] = data?.data;
+                }
+              )
+            );
+          })
+          .catch(({ error }) => {
+            console.log(error);
+          });
       },
     }),
 
@@ -64,10 +74,7 @@ export const marketService = apiService.injectEndpoints({
         url: `market/${id}`,
         method: "DELETE",
       }),
-      onQueryStarted({ id }, { dispatch, queryFulfilled }) {
-        console.log("id", id);
-
-        queryFulfilled;
+      onQueryStarted(id, { dispatch, queryFulfilled }) {
         queryFulfilled
           .then(({ data }) => {
             dispatch(
@@ -75,7 +82,11 @@ export const marketService = apiService.injectEndpoints({
                 "getMarket",
                 undefined,
                 (draft) => {
-                  return (draft = draft?.filter((item) => item?._id !== id));
+                  if (draft?.data?.data) {
+                    draft.data.data = draft.data.data.filter(
+                      (item) => item._id !== id
+                    );
+                  }
                 }
               )
             );
@@ -90,6 +101,6 @@ export const marketService = apiService.injectEndpoints({
 export const {
   useGetMarketQuery,
   useDeleteMarketMutation,
-  useCrateMarketMutation,
+  useCreteMarketMutation,
   useUpdateMarketMutation,
 } = marketService;

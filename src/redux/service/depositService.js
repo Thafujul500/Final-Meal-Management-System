@@ -19,21 +19,26 @@ export const depositService = apiService.injectEndpoints({
 
       // cash update
       onQueryStarted(_arg, { dispatch, queryFulfilled }) {
-        queryFulfilled.then(({ data }) => {
-          console.log(`cash update : ${data}`);
-          dispatch(
-            apiService.util.updateQueryData(
-              "getDeposit",
-              undefined,
-              (draft) => {
-                draft?.unshift(data?.data?.deposit);
-                return draft;
-              }
-            )
-          );
-        });
+        queryFulfilled
+          .then(({ data }) => {
+            console.log(data); // Ok
+
+            dispatch(
+              apiService.util.updateQueryData(
+                "getDeposit",
+                undefined,
+                (draft) => {
+                  draft?.data?.data?.unshift(data?.data?.deposit);
+                }
+              )
+            );
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       },
     }),
+
     updateDeposit: builder.mutation({
       query: ({ id, postBody }) => ({
         url: `deposit/${id}`,

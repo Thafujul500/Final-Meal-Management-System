@@ -42,7 +42,6 @@ export const Deposit = () => {
 
   //handleCreateHandeler
   const handleCreateHandeler = () => {
-    console.log("Hellow");
     setDefaultValues(defaultValue);
     setEdit(false);
     setTitleName("Create");

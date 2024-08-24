@@ -1,5 +1,3 @@
-// member service
-
 import { apiService } from "../api/apiService";
 
 export const memberService = apiService.injectEndpoints({

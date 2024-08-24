@@ -20,7 +20,7 @@ import dayjs from "dayjs";
 import { MenuItem } from "@mui/material";
 import { useGetMemberQuery } from "../../../redux/service/memberService";
 import {
-  useCrateMarketMutation,
+  useCreteMarketMutation,
   useUpdateMarketMutation,
 } from "../../../redux/service/marketService";
 
@@ -40,7 +40,7 @@ function MarketCreateUpdate({
   const [
     crateMarket,
     { isSuccess: createMarketSuuccess, isLoading: createMarketIsLoading },
-  ] = useCrateMarketMutation();
+  ] = useCreteMarketMutation();
   // update market
   const [
     updateMarket,
@@ -151,7 +151,7 @@ function MarketCreateUpdate({
                 variant="h6"
                 component="h2"
               >
-                {titleName} Deposit
+                {titleName} Market
               </Typography>
               <Typography id="modal-modal-title">
                 <CloseIcon onClick={handleClose} />

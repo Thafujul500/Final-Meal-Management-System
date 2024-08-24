@@ -25,6 +25,7 @@ export const mealSearvice = apiService.injectEndpoints({
         body: postBody,
       }),
     }),
+
     updateMeal: builder.mutation({
       query: ({ id, postBody }) => ({
         url: `meal/${id}`,
