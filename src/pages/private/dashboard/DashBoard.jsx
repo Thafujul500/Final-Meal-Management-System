@@ -1,19 +1,20 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 import Grid from "@mui/material/Grid";
+import SmallLoading from "../../SmallLoading";
 import Typography from "@mui/material/Typography";
-import { useGetDashBoardQuery } from "../../../redux/service/dashboardService";
 import PeopleIcon from "@mui/icons-material/People";
-import PersonOffIcon from "@mui/icons-material/PersonOff";
+import CardContent from "@mui/material/CardContent";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
+import PersonOffIcon from "@mui/icons-material/PersonOff";
+import RamenDiningIcon from "@mui/icons-material/RamenDining";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
-import RamenDiningIcon from "@mui/icons-material/RamenDining";
-import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
+import { useGetDashBoardQuery } from "../../../redux/service/dashboardService";
+import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 function DashBoard() {
   const { data } = useGetDashBoardQuery();
   const value = data?.data;
@@ -54,13 +55,13 @@ function DashBoard() {
     },
     {
       title: "Total Deposit",
-      value: value?.totalDeposit,
+      value: value?.totalDeposit.toFixed(2),
       icon: <AttachMoneyIcon fontSize="large" />,
       color: "#ffab91",
     },
     {
       title: "Total Cost",
-      value: value?.totalCost,
+      value: value?.totalCost.toFixed(2),
       icon: <AccountBalanceIcon fontSize="large" />,
       color: "#e6ee9c",
     },
@@ -78,7 +79,7 @@ function DashBoard() {
     },
     {
       title: "Total Cash In Hand",
-      value: value?.totalCashInHand,
+      value: value?.totalCashInHand.toFixed(2),
       icon: <AccountBalanceWalletIcon fontSize="large" />,
       color: "#9fa8da",
     },
@@ -101,10 +102,16 @@ function DashBoard() {
                   {card?.title}
                 </Typography>
                 <Typography
-                  sx={{ mb: 1.5, fontSize: "20px" }}
+                  sx={{
+                    mb: 1.5,
+                    fontSize: "20px",
+                    display: "flex",
+                    justifyContent: "center",
+                    marginTop: "10px",
+                  }}
                   color="text.secondary"
                 >
-                  {card?.value}
+                  {card?.value || <SmallLoading />}
                 </Typography>
               </CardContent>
             </Card>

@@ -18,11 +18,12 @@ import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import dayjs from "dayjs";
-import { MenuItem } from "@mui/material";
 import {
   useCreateDepositMutation,
   useUpdateDepositMutation,
 } from "../../../redux/service/depositService";
+import { MenuItem } from "@mui/material";
+import SmallLoading from "./../../SmallLoading";
 
 const DepositCreateUpdate = ({
   handleClose,
@@ -37,8 +38,10 @@ const DepositCreateUpdate = ({
   // get member
   const { data } = useGetMemberQuery();
   // create deposit
-  const [createDeposit, { isSuccess: isCreateSuccess }] =
-    useCreateDepositMutation();
+  const [
+    createDeposit,
+    { isSuccess: isCreateSuccess, isLoading: isCreatingDeposit },
+  ] = useCreateDepositMutation();
   // update deposit
   const [updateDeposit, { isSuccess: isUpdateSuccess }] =
     useUpdateDepositMutation();
@@ -248,7 +251,7 @@ const DepositCreateUpdate = ({
                 variant="contained"
                 size="small"
               >
-                Submit
+                Submit {isCreatingDeposit && <SmallLoading />}
               </Button>
             </form>
           </Box>

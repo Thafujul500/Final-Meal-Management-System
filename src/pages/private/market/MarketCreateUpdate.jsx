@@ -27,13 +27,13 @@ import SmallLoading from "../../SmallLoading";
 import { defaultvalue } from "./Market";
 
 function MarketCreateUpdate({
-  handleClose,
   open,
-  setDefaultvalues,
-  defaultvalues,
-  setEditData,
   editData,
   titleName,
+  handleClose,
+  setEditData,
+  defaultvalues,
+  setDefaultvalues,
 }) {
   console.log(defaultvalues);
   // get member
@@ -51,15 +51,15 @@ function MarketCreateUpdate({
 
   // mui style
   const style = {
-    position: "absolute",
+    p: 4,
     top: "50%",
     left: "50%",
-    transform: "translate(-50%, -50%)",
     width: 400,
-    bgcolor: "background.paper",
-    border: "2px solid #000",
     boxShadow: 24,
-    p: 4,
+    position: "absolute",
+    border: "2px solid #000",
+    bgcolor: "background.paper",
+    transform: "translate(-50%, -50%)",
   };
 
   const ITEM_HEIGHT = 48;

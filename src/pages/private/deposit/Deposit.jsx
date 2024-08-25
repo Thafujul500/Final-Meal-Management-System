@@ -1,7 +1,7 @@
 import * as React from "react";
 import {
   useDeleteDepositMutation,
-  useFindDepositQuery,
+  useGetDepositQuery,
 } from "../../../redux/service/depositService";
 import Table from "../../../components/Table";
 import dayjs from "dayjs";
@@ -15,7 +15,7 @@ import Loading from "../../Loading";
 export const Deposit = () => {
   const [pageQuery, setPageQuery] = React.useState(1);
   // get deposit
-  const { data, isLoading, isError } = useFindDepositQuery(pageQuery);
+  const { data, isLoading, isError } = useGetDepositQuery(pageQuery);
   const value = data?.data?.data;
   const pagination = data?.data?.pagination;
 

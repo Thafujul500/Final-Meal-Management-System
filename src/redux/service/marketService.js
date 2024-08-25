@@ -1,5 +1,4 @@
 // market service
-
 import { apiService } from "../api/apiService";
 
 export const marketService = apiService.injectEndpoints({
@@ -22,11 +21,15 @@ export const marketService = apiService.injectEndpoints({
       onQueryStarted(_arg, { dispatch, queryFulfilled }) {
         queryFulfilled
           .then(({ data }) => {
+            console.log(data);
+
             dispatch(
               apiService.util.updateQueryData(
                 "getMarket",
                 undefined,
                 (draft) => {
+                  console.log(JSON.stringify(draft));
+
                   draft?.data?.data?.unshift(data?.data?.market);
                 }
               )

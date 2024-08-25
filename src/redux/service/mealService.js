@@ -24,6 +24,18 @@ export const mealSearvice = apiService.injectEndpoints({
         method: "POST",
         body: postBody,
       }),
+      onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+        queryFulfilled.then(({ data }) => {
+          console.log(data);
+          setTimeout(() => {
+            dispatch(
+              apiService.util.updateQueryData("getMeal", undefined, (draft) => {
+                console.log(JSON.stringify(draft));
+              })
+            );
+          }, 500);
+        });
+      },
     }),
 
     updateMeal: builder.mutation({

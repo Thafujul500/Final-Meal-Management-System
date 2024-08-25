@@ -103,13 +103,16 @@ const Table = ({ value, column, pageQuery, setPageQuery, pagination }) => {
         {...getTableProps()}
       >
         <thead>
-          {headerGroups?.map((headerGroup) => (
+          {headerGroups?.map((headerGroup, i) => (
             <tr
+              key={i}
               style={{ height: "50px" }}
               {...headerGroup.getHeaderGroupProps()}
             >
-              {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+              {headerGroup.headers.map((column, i) => (
+                <th key={i} {...column.getHeaderProps()}>
+                  {column.render("Header")}
+                </th>
               ))}
             </tr>
           ))}
@@ -118,22 +121,26 @@ const Table = ({ value, column, pageQuery, setPageQuery, pagination }) => {
           style={{ backgroundColor: "#D1E7DD", textAlign: "center" }}
           {...getTableBodyProps()}
         >
-          {page?.map((row) => {
+          {page?.map((row, i) => {
             prepareRow(row);
             return (
-              <tr style={{ height: "50px" }} {...row.getRowProps()}>
-                {row.cells.map((cell) => (
-                  <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+              <tr key={i} style={{ height: "50px" }} {...row.getRowProps()}>
+                {row.cells.map((cell, i) => (
+                  <td key={i} {...cell.getCellProps()}>
+                    {cell.render("Cell")}
+                  </td>
                 ))}
               </tr>
             );
           })}
         </tbody>
         <tfoot>
-          {footerGroups?.map((footerGroup) => (
-            <tr {...footerGroup.getFooterGroupProps()}>
-              {footerGroup.headers.map((column) => (
-                <td {...column.getFooterProps()}>{column.render("Footer")}</td>
+          {footerGroups?.map((footerGroup, i) => (
+            <tr key={i} {...footerGroup.getFooterGroupProps()}>
+              {footerGroup.headers.map((column, i) => (
+                <td key={i} {...column.getFooterProps()}>
+                  {column.render("Footer")}
+                </td>
               ))}
             </tr>
           ))}
@@ -154,8 +161,6 @@ const Table = ({ value, column, pageQuery, setPageQuery, pagination }) => {
           type="number"
           disabled={pagination?.totalPage === 1}
           onChange={(e) => {
-            // const pageNumber = e.target.value ? Number(e.target.value) - 1 : 1;
-            // gotoPage(pageNumber);
             setPageQuery(e.target.value);
           }}
         />

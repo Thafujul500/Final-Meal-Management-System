@@ -23,6 +23,7 @@ export const Market = () => {
 
   // get market
   const { data, isLoading, isError } = useGetMarketQuery();
+
   const value = data?.data?.data;
 
   const pagination = data?.data?.pagination;
@@ -37,7 +38,6 @@ export const Market = () => {
   const handleClose = () => setOpen(false);
 
   // local storage
-
   const [defaultvalues, setDefaultvalues] = React.useState(defaultvalue);
   const [editData, setEditData] = React.useState(false);
   const [titleName, setTitleName] = React.useState("");
@@ -69,11 +69,10 @@ export const Market = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         deleteMarket(value);
-
         Swal.fire({
           title: "Deleted!",
-          text: "Your file has been deleted.",
           icon: "success",
+          text: "Your file has been deleted.",
         });
       }
     });
@@ -98,7 +97,6 @@ export const Market = () => {
       </div>
     );
   };
-  // deleteMarket(row?.original?._id)
   // column
   const column = [
     {
@@ -165,9 +163,6 @@ export const Market = () => {
           style={{
             width: "200px",
             marginLeft: "55px",
-            // position: "absolute",
-            // right: "70px",
-            // marginTop: "10px",
           }}
           onClick={handleCreateMarket}
         >
@@ -191,13 +186,13 @@ export const Market = () => {
 
       <MarketCreateUpdate
         open={open}
+        editData={editData}
+        titleName={titleName}
+        setEditData={setEditData}
         handleClose={handleClose}
         defaultvalue={defaultvalue}
         defaultvalues={defaultvalues}
         setDefaultvalues={setDefaultvalues}
-        titleName={titleName}
-        editData={editData}
-        setEditData={setEditData}
       />
     </div>
   );

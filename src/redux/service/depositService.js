@@ -3,7 +3,7 @@ import { apiService } from "../api/apiService";
 
 export const depositService = apiService.injectEndpoints({
   endpoints: (builder) => ({
-    findDeposit: builder.query({
+    getDeposit: builder.query({
       query: (page) => ({
         url: `deposit?page=${page}&limit=${10}`,
         method: "GET",
@@ -16,19 +16,18 @@ export const depositService = apiService.injectEndpoints({
         method: "POST",
         body: postBody,
       }),
-
       // cash update
       onQueryStarted(_arg, { dispatch, queryFulfilled }) {
         queryFulfilled
           .then(({ data }) => {
-            console.log(data); // Ok
+            console.log(data?.data?.deposit);
             dispatch(
               apiService.util.updateQueryData(
-                "findDeposit",
+                "getDeposit",
                 undefined,
                 (draft) => {
                   console.log(JSON.stringify(draft));
-                  // draft?.data?.data.unshift(data?.data?.deposit);
+                  draft?.data?.data?.unshift(data?.data?.deposit);
                 }
               )
             );
@@ -53,8 +52,8 @@ export const depositService = apiService.injectEndpoints({
               "getDeposit",
               undefined,
               (draft) => {
-                const finindex = draft?.finindex((item) => item?._id === id);
-                return (dispatch[finindex] = data?.data);
+                // const finindex = draft?.finindex((item) => item?._id === id);
+                // (draft?.data?.data[finindex] = data?.data);
               }
             )
           );
@@ -74,5 +73,5 @@ export const {
   useCreateDepositMutation,
   useDeleteDepositMutation,
   useUpdateDepositMutation,
-  useFindDepositQuery,
+  useGetDepositQuery,
 } = depositService;

@@ -110,13 +110,7 @@ function MealCreateUpdate({
       setEditData(false);
       handleClose();
     }
-  }, [
-    isCreateMealSuccess,
-    isUpdateMealSuccess,
-    defaultValue,
-    setDefaultValues,
-    setEditData,
-  ]);
+  }, [isCreateMealSuccess, isUpdateMealSuccess]);
 
   return (
     <div>
