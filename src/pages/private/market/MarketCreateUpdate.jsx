@@ -100,8 +100,6 @@ function MarketCreateUpdate({
   });
 
   const onSubmit = (data) => {
-    // console.log(data);
-
     if (editData) {
       const editedData = {
         member: data?.member,

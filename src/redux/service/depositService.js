@@ -18,23 +18,21 @@ export const depositService = apiService.injectEndpoints({
       }),
       // cash update
       onQueryStarted(_arg, { dispatch, queryFulfilled }) {
-        queryFulfilled
-          .then(({ data }) => {
-            console.log(data?.data?.deposit);
-            dispatch(
-              apiService.util.updateQueryData(
-                "getDeposit",
-                undefined,
-                (draft) => {
-                  console.log(JSON.stringify(draft));
-                  draft?.data?.data?.unshift(data?.data?.deposit);
-                }
-              )
-            );
-          })
-          .catch((error) => {
-            console.log("error", error);
-          });
+        queryFulfilled.then(({ data }) => {
+          console.log(data);
+
+          dispatch(
+            apiService.util.updateQueryData(
+              "getDeposit",
+              undefined,
+              (draft) => {
+                console.log(JSON.stringify(draft));
+
+                // draft?.data?.data.unshift()
+              }
+            )
+          );
+        });
       },
     }),
 
