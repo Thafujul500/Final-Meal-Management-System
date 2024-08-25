@@ -13,9 +13,13 @@ import MarketCreateUpdate from "./MarketCreateUpdate";
 import { Typography } from "@mui/material";
 import Loading from "../../Loading";
 import Swal from "sweetalert2";
-
+export const defaultvalue = {
+  marketDate: new Date(),
+  member: "",
+  totalPrice: 0,
+};
 export const Market = () => {
-  const [pageQuery, setPageQuery] = React.useState(1);
+  const [pageQuery, setPageQuery] = React.useState();
 
   // get market
   const { data, isLoading, isError } = useGetMarketQuery();
@@ -33,11 +37,6 @@ export const Market = () => {
   const handleClose = () => setOpen(false);
 
   // local storage
-  const defaultvalue = {
-    marketDate: new Date(),
-    member: "",
-    totalPrice: 0,
-  };
 
   const [defaultvalues, setDefaultvalues] = React.useState(defaultvalue);
   const [editData, setEditData] = React.useState(false);
@@ -52,7 +51,6 @@ export const Market = () => {
   };
   // handleUpdateMarket
   const handleUpdateMarket = (data) => {
-    // console.log(data);
     setDefaultvalues(data);
     setEditData(true);
     setTitleName("Update");

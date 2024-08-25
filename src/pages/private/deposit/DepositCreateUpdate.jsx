@@ -46,7 +46,14 @@ const DepositCreateUpdate = ({
 
   const Schema = yup.object({
     member: yup.string().required("Member is required"),
-    depositAmount: yup.number().required("Deposit Amount is required"),
+    depositAmount: yup
+      .number()
+      .typeError("Total Price must be a number")
+      .required("Total Price is required")
+      .positive("Total Price must be a positive number")
+      .integer("Total Price must be an integer")
+      .min(1, "Total Price must be at least 1")
+      .max(10000, "Total Price cannot exceed 10000"),
     depositDate: yup.date().required("Deposit Date is required"),
   });
 
@@ -79,12 +86,7 @@ const DepositCreateUpdate = ({
       };
       createDeposit({ postBody: createData });
     }
-    // handleClose(); // Close the modal on submit
   };
-
-  useEffect(() => {
-    reset(defaulValues);
-  }, [defaulValues, reset]);
 
   useEffect(() => {
     if (isCreateSuccess || isUpdateSuccess) {
@@ -92,13 +94,11 @@ const DepositCreateUpdate = ({
       setEdit(false);
       handleClose();
     }
-  }, [
-    isCreateSuccess,
-    isUpdateSuccess,
-    defaultValue,
-    setDefaultValues,
-    setEdit,
-  ]);
+  }, [isCreateSuccess, isUpdateSuccess]);
+
+  useEffect(() => {
+    reset(defaulValues);
+  }, [defaulValues]);
 
   const style = {
     position: "absolute",

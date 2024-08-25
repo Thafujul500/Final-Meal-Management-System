@@ -23,17 +23,19 @@ import {
   useCreteMarketMutation,
   useUpdateMarketMutation,
 } from "../../../redux/service/marketService";
+import SmallLoading from "../../SmallLoading";
+import { defaultvalue } from "./Market";
 
 function MarketCreateUpdate({
   handleClose,
   open,
-  defaultvalue,
   setDefaultvalues,
   defaultvalues,
   setEditData,
   editData,
   titleName,
 }) {
+  console.log(defaultvalues);
   // get member
   const { data } = useGetMemberQuery();
   // create market
@@ -74,7 +76,14 @@ function MarketCreateUpdate({
   // react hook form
   const Schema = yup.object({
     member: yup.string().required("Member is required"),
-    totalPrice: yup.number().required("Total Price is required"),
+    totalPrice: yup
+      .number()
+      .typeError("Total Price must be a number")
+      .required("Total Price is required")
+      .positive("Total Price must be a positive number")
+      .integer("Total Price must be an integer")
+      .min(1, "Total Price must be at least 1")
+      .max(10000, "Total Price cannot exceed 10000"),
     marketDate: yup.date().required("Market date is required"),
   });
 
@@ -108,12 +117,7 @@ function MarketCreateUpdate({
       };
       crateMarket({ postBody: cretedData });
     }
-    // handleClose(); // Close the modal on submit
   };
-
-  useEffect(() => {
-    reset(defaultvalues);
-  }, [defaultvalues, reset]);
 
   useEffect(() => {
     if (createMarketSuuccess || updateMarketSuuccess) {
@@ -121,13 +125,11 @@ function MarketCreateUpdate({
       setEditData(false);
       handleClose();
     }
-  }, [
-    createMarketSuuccess,
-    updateMarketSuuccess,
-    defaultvalue,
-    setDefaultvalues,
-    setEditData,
-  ]);
+  }, [createMarketSuuccess, updateMarketSuuccess]);
+
+  useEffect(() => {
+    reset(defaultvalues);
+  }, [defaultvalues]);
 
   return (
     <div>
@@ -178,8 +180,8 @@ function MarketCreateUpdate({
                       MenuProps={MenuProps}
                     >
                       {data?.data?.data?.map((name) => (
-                        <MenuItem key={name._id} value={name._id}>
-                          {name.name}
+                        <MenuItem key={name?._id} value={name?._id}>
+                          {name?.name}
                         </MenuItem>
                       ))}
                     </Select>
@@ -255,8 +257,8 @@ function MarketCreateUpdate({
                 size="small"
               >
                 Submit{" "}
-                {/* {(updateMarketIsLoading && <Loading size={5} />) ||
-                  (createMarketIsLoading && <Loading size={5} />)} */}
+                {(updateMarketIsLoading && <SmallLoading />) ||
+                  (createMarketIsLoading && <SmallLoading />)}
               </Button>
             </form>
           </Box>

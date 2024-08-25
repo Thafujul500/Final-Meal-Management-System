@@ -37,7 +37,6 @@ function MealCreateUpdate({
 
   // activeMeal
   const { data: activeMeal } = useActiveMealQuery();
-  // console.log(activeMeal);
   // create meal
   const [createMeal, { isSuccess: isCreateMealSuccess }] =
     useCreateMealMutation();
@@ -99,7 +98,6 @@ function MealCreateUpdate({
       };
       createMeal({ postBody: createdData });
     }
-    // handleClose(); // Close the modal on submit
   };
 
   useEffect(() => {

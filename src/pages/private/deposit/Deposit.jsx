@@ -127,9 +127,6 @@ export const Deposit = () => {
           sx={{
             width: "200px",
             marginLeft: "55px",
-            // position: "absolute",
-            // right: "70px",
-            // marginTop: "10px",
           }}
           onClick={handleCreateHandeler}
         >

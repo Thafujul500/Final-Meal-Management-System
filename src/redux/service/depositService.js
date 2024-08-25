@@ -22,19 +22,19 @@ export const depositService = apiService.injectEndpoints({
         queryFulfilled
           .then(({ data }) => {
             console.log(data); // Ok
-
             dispatch(
               apiService.util.updateQueryData(
-                "getDeposit",
+                "findDeposit",
                 undefined,
                 (draft) => {
-                  draft?.data?.data?.unshift(data?.data?.deposit);
+                  console.log(JSON.stringify(draft));
+                  // draft?.data?.data.unshift(data?.data?.deposit);
                 }
               )
             );
           })
           .catch((error) => {
-            console.log(error);
+            console.log("error", error);
           });
       },
     }),
