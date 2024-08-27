@@ -7,6 +7,7 @@ export const mealSearvice = apiService.injectEndpoints({
     getMeal: builder.query({
       query: (page) => ({
         url: `meal?page=${page}&limit=${10}`,
+        // url: "meal",
         method: "GET",
       }),
     }),
@@ -27,13 +28,12 @@ export const mealSearvice = apiService.injectEndpoints({
       onQueryStarted(_arg, { dispatch, queryFulfilled }) {
         queryFulfilled.then(({ data }) => {
           console.log(data);
-          setTimeout(() => {
-            dispatch(
-              apiService.util.updateQueryData("getMeal", undefined, (draft) => {
-                console.log(JSON.stringify(draft));
-              })
-            );
-          }, 500);
+          dispatch(
+            apiService.util.updateQueryData("getMeal", undefined, (draft) => {
+              console.log(JSON.stringify(draft));
+              draft?.data?.data?.unshift(data?.dara?.meal);
+            })
+          );
         });
       },
     }),

@@ -4,7 +4,6 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import CloseIcon from "@mui/icons-material/Close";
-import { useTheme } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -19,6 +18,7 @@ import {
   useCreateMealMutation,
   useUpdateMealMutation,
 } from "../../../redux/service/mealService";
+import SmallLoading from "../../SmallLoading";
 
 function MealCreateUpdate({
   open,
@@ -38,11 +38,15 @@ function MealCreateUpdate({
   // activeMeal
   const { data: activeMeal } = useActiveMealQuery();
   // create meal
-  const [createMeal, { isSuccess: isCreateMealSuccess }] =
-    useCreateMealMutation();
+  const [
+    createMeal,
+    { isSuccess: isCreateMealSuccess, isLoading: isCreateMeal },
+  ] = useCreateMealMutation();
   // update meal
-  const [updateMeal, { isSuccess: isUpdateMealSuccess }] =
-    useUpdateMealMutation();
+  const [
+    updateMeal,
+    { isSuccess: isUpdateMealSuccess, isLoading: isUpdateMeal },
+  ] = useUpdateMealMutation();
 
   // mui style
   const style = {
@@ -217,7 +221,9 @@ function MealCreateUpdate({
                 variant="contained"
                 size="small"
               >
-                Submit
+                Submit{" "}
+                {(isCreateMeal && <SmallLoading />) ||
+                  (isUpdateMeal && <SmallLoading />)}
               </Button>
             </form>
           </Box>

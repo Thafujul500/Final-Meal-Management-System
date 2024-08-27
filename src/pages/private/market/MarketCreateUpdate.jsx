@@ -35,7 +35,6 @@ function MarketCreateUpdate({
   defaultvalues,
   setDefaultvalues,
 }) {
-  console.log(defaultvalues);
   // get member
   const { data } = useGetMemberQuery();
   // create market

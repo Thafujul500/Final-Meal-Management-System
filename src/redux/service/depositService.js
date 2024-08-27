@@ -1,4 +1,5 @@
 // deposit service
+import { json } from "react-router-dom";
 import { apiService } from "../api/apiService";
 
 export const depositService = apiService.injectEndpoints({
@@ -6,6 +7,7 @@ export const depositService = apiService.injectEndpoints({
     getDeposit: builder.query({
       query: (page) => ({
         url: `deposit?page=${page}&limit=${10}`,
+        // url:"deposit"
         method: "GET",
       }),
     }),
@@ -27,8 +29,7 @@ export const depositService = apiService.injectEndpoints({
               undefined,
               (draft) => {
                 console.log(JSON.stringify(draft));
-
-                // draft?.data?.data.unshift()
+                draft?.data?.data?.unshift(data?.data?.deposit);
               }
             )
           );

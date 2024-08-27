@@ -10,6 +10,8 @@ export const Summary = () => {
 
   // get summary
   const { data, isLoading, isError } = useGetSummaryQuery(pageQuery);
+  console.log(data);
+
   const pagination = data?.data?.pagination;
 
   const value = data?.data?.data;
@@ -18,6 +20,11 @@ export const Summary = () => {
   // console.log(memberData?.data?.data);
 
   const column = [
+    {
+      Header: "#",
+      accessor: "xl",
+      Cell: ({ row }) => row.index + 1,
+    },
     {
       Header: "Member",
       accessor: "member",

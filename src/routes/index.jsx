@@ -50,7 +50,7 @@ export const route = createBrowserRouter([
     element: <Login />,
   },
   {
-    path: "/register",
+    path: "/registration",
     element: <Registration />,
   },
 ]);

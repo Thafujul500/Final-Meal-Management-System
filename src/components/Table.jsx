@@ -1,5 +1,10 @@
 import React, { useMemo, useRef } from "react";
-import { useTable, useGlobalFilter, usePagination } from "react-table";
+import {
+  useTable,
+  useGlobalFilter,
+  usePagination,
+  useSortBy,
+} from "react-table";
 import { GlobalFilter } from "./GlobalFilter";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
@@ -9,10 +14,10 @@ import ReactToPrint from "react-to-print";
 import LocalPrintshopIcon from "@mui/icons-material/LocalPrintshop";
 import DownloadIcon from "@mui/icons-material/Download";
 import * as XLSX from "xlsx";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 const Table = ({ value, column, pageQuery, setPageQuery, pagination }) => {
-  // console.log(pagination);
-
   const columns = useMemo(() => column, [column]);
   const data = useMemo(() => value, [value]);
 
@@ -31,6 +36,7 @@ const Table = ({ value, column, pageQuery, setPageQuery, pagination }) => {
       data,
     },
     useGlobalFilter,
+    useSortBy,
     usePagination
   );
 
@@ -110,8 +116,22 @@ const Table = ({ value, column, pageQuery, setPageQuery, pagination }) => {
               {...headerGroup.getHeaderGroupProps()}
             >
               {headerGroup.headers.map((column, i) => (
-                <th key={i} {...column.getHeaderProps()}>
+                <th
+                  key={i}
+                  {...column.getHeaderProps(column.getSortByToggleProps())}
+                >
                   {column.render("Header")}
+                  <span style={{ marginLeft: "5px" }}>
+                    {column?.isSorted ? (
+                      column.isSortedDesc ? (
+                        <ArrowDropDownIcon />
+                      ) : (
+                        <ArrowDropUpIcon />
+                      )
+                    ) : (
+                      ""
+                    )}
+                  </span>
                 </th>
               ))}
             </tr>

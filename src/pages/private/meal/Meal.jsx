@@ -58,7 +58,6 @@ function Meal() {
 
   // handleEditClick
   const handleEditClick = (data) => {
-    console.log(data);
     setDefaultValues(data);
     setTitleName("Update");
     setEditData(true);
