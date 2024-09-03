@@ -5,6 +5,7 @@ export const marketService = apiService.injectEndpoints({
   endpoints: (builder) => ({
     getMarket: builder.query({
       query: () => ({
+        // url: `market?page=${page}&limit=${10}`,
         url: "market",
         method: "GET",
       }),
