@@ -1,16 +1,16 @@
 import * as React from "react";
-import { useGetMemberQuery } from "../../../redux/service/memberService";
+// import { useGetMemberQuery } from "../../../redux/service/memberService";
 import Button from "@mui/material/Button";
 import {
   useDeleteMarketMutation,
   useGetMarketQuery,
+  useGetMemberQuery,
 } from "../../../redux/service/marketService";
 import Table from "../../../components/Table";
 import dayjs from "dayjs";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import MarketCreateUpdate from "./MarketCreateUpdate";
-import { Typography } from "@mui/material";
 import Loading from "../../Loading";
 import Swal from "sweetalert2";
 export const defaultvalue = {
@@ -19,17 +19,16 @@ export const defaultvalue = {
   totalPrice: 0,
 };
 export const Market = () => {
-  const [pageQuery, setPageQuery] = React.useState();
-
+  const [pageQuery, setPageQuery] = React.useState(1);
   // get market
-  const { data, isLoading, isError } = useGetMarketQuery();
+  const { data, isLoading, isError } = useGetMarketQuery(pageQuery);
 
   const value = data?.data?.data;
 
   const pagination = data?.data?.pagination;
 
   // get member
-  const { data: memberData } = useGetMemberQuery();
+  const { data: memberData } = useGetMemberQuery(pageQuery);
   // delete market
   const [deleteMarket, { isSuccess }] = useDeleteMarketMutation();
   // handle open moda
@@ -180,7 +179,7 @@ export const Market = () => {
       )}
       {isError && (
         <p style={{ textAlign: "center", marginTop: "20px" }}>
-          Thate is an error
+          There is an error
         </p>
       )}
 
@@ -193,6 +192,7 @@ export const Market = () => {
         defaultvalue={defaultvalue}
         defaultvalues={defaultvalues}
         setDefaultvalues={setDefaultvalues}
+        pageQuery={pageQuery}
       />
     </div>
   );

@@ -1,186 +1,94 @@
 import { Box } from "@mui/material";
 import React from "react";
-import RestaurantIcon from "@mui/icons-material/Restaurant";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
-import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
-import LocalGroceryStoreIcon from "@mui/icons-material/LocalGroceryStore";
-import FastfoodIcon from "@mui/icons-material/Fastfood";
-import SummarizeIcon from "@mui/icons-material/Summarize";
+import {
+  Restaurant as RestaurantIcon,
+  Dashboard as DashboardIcon,
+  PeopleAlt as PeopleAltIcon,
+  MonetizationOn as MonetizationOnIcon,
+  LocalGroceryStore as LocalGroceryStoreIcon,
+  Fastfood as FastfoodIcon,
+  Summarize as SummarizeIcon,
+} from "@mui/icons-material";
 import Typography from "@mui/material/Typography";
 import { NavLink } from "react-router-dom";
 
+const menuItems = [
+  { label: "Dashboard", icon: <DashboardIcon />, path: "/" },
+  { label: "Member", icon: <PeopleAltIcon />, path: "/member" },
+  { label: "Deposit", icon: <MonetizationOnIcon />, path: "/deposit" },
+  { label: "Market", icon: <LocalGroceryStoreIcon />, path: "/market" },
+  { label: "Meal", icon: <FastfoodIcon />, path: "/meal" },
+  { label: "Summary", icon: <SummarizeIcon />, path: "/summary" },
+];
+
 function Expand() {
   return (
-    <div>
+    <Box
+      sx={{
+        width: "180px",
+        height: "100vh",
+        backgroundColor: "#70c4bc",
+        position: "fixed",
+        top: "0px",
+        left: "0px",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      {/* Header */}
       <Box
         sx={{
-          width: "180px",
-          height: "100vh",
-          backgroundColor: "gray",
-          position: "absolute",
           display: "flex",
-          flexDirection: "column",
-          position: "fixed",
-          top: "0px",
-          left: "0px",
-          backgroundColor: "#70c4bc",
+          alignItems: "center",
+          padding: "20px 10px",
         }}
       >
-        <Box
+        <RestaurantIcon />
+        <Typography
+          variant="h6"
           sx={{
-            display: "flex",
-            flexDirection: "row",
+            fontSize: "19px",
+            marginLeft: "10px",
           }}
         >
-          <RestaurantIcon
-            sx={{
-              marginTop: "20px",
-              marginLeft: "10px",
-            }}
-          />
-          <Typography
-            variant="h6"
-            sx={{
-              fontSize: "19px",
-              marginTop: "20px",
-              marginLeft: "10px",
-              marginBottom: "13px",
-            }}
-          >
-            Bite & Share{" "}
-          </Typography>
-        </Box>
+          Bite & Share
+        </Typography>
+      </Box>
 
-        <NavLink to="/" style={{ textDecoration: "none", color: "black" }}>
+      {/* Menu Items */}
+      {menuItems.map((item, index) => (
+        <NavLink
+          key={index}
+          to={item.path}
+          style={{
+            textDecoration: "none",
+            color: "black",
+          }}
+        >
           <Box
             sx={{
               display: "flex",
-              flexDirection: "row",
-              color: "black",
-              textDecoration: "none",
+              alignItems: "center",
+              padding: "15px 10px",
+              "&:hover": {
+                backgroundColor: "#5ba8a0",
+              },
             }}
           >
-            <DashboardIcon sx={{ marginTop: "15px", marginLeft: "10px" }} />
-            <Typography
-              variant="h6"
-              className="text"
-              sx={{
-                fontSize: "19px",
-                marginTop: "15px",
-                marginBottom: "15px",
-                marginLeft: "10px",
-                color: "black",
-                textDecoration: "none",
-              }}
-            >
-              Dashboard{" "}
-            </Typography>
-          </Box>
-        </NavLink>
-
-        <NavLink
-          to="/member"
-          style={{ textDecoration: "none", color: "black" }}
-        >
-          <Box sx={{ display: "flex", flexDirection: "row" }}>
-            <PeopleAltIcon sx={{ marginTop: "15px", marginLeft: "10px" }} />
+            {item.icon}
             <Typography
               variant="h6"
               sx={{
                 fontSize: "19px",
-                marginTop: "15px",
-                marginBottom: "15px",
                 marginLeft: "10px",
               }}
             >
-              Member{" "}
+              {item.label}
             </Typography>
           </Box>
         </NavLink>
-
-        <NavLink
-          to="/deposit"
-          style={{ textDecoration: "none", color: "black" }}
-        >
-          <Box sx={{ display: "flex", flexDirection: "row" }}>
-            <MonetizationOnIcon
-              sx={{ marginTop: "15px", marginLeft: "10px" }}
-            />
-            <Typography
-              variant="h6"
-              sx={{
-                fontSize: "19px",
-                marginTop: "15px",
-                marginBottom: "15px",
-                marginLeft: "10px",
-              }}
-            >
-              Deposit{" "}
-            </Typography>
-          </Box>
-        </NavLink>
-
-        <NavLink
-          to="/market"
-          style={{ textDecoration: "none", color: "black" }}
-        >
-          <Box sx={{ display: "flex", flexDirection: "row" }}>
-            <LocalGroceryStoreIcon
-              sx={{ marginTop: "15px", marginLeft: "10px" }}
-            />
-            <Typography
-              variant="h6"
-              sx={{
-                fontSize: "19px",
-                marginTop: "15px",
-                marginBottom: "15px",
-                marginLeft: "10px",
-              }}
-            >
-              Market{" "}
-            </Typography>
-          </Box>
-        </NavLink>
-
-        <NavLink to="/meal" style={{ textDecoration: "none", color: "black" }}>
-          <Box sx={{ display: "flex", flexDirection: "row" }}>
-            <FastfoodIcon sx={{ marginTop: "15px", marginLeft: "10px" }} />
-            <Typography
-              variant="h6"
-              sx={{
-                fontSize: "19px",
-                marginTop: "15px",
-                marginBottom: "15px",
-                marginLeft: "10px",
-              }}
-            >
-              Meal{" "}
-            </Typography>
-          </Box>
-        </NavLink>
-
-        <NavLink
-          to="/summary"
-          style={{ textDecoration: "none", color: "black" }}
-        >
-          <Box sx={{ display: "flex", flexDirection: "row" }}>
-            <SummarizeIcon sx={{ marginTop: "15px", marginLeft: "10px" }} />
-            <Typography
-              variant="h6"
-              sx={{
-                fontSize: "19px",
-                marginTop: "15px",
-                marginBottom: "15px",
-                marginLeft: "10px",
-              }}
-            >
-              Summary{" "}
-            </Typography>
-          </Box>
-        </NavLink>
-      </Box>
-    </div>
+      ))}
+    </Box>
   );
 }
 

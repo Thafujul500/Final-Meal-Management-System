@@ -9,7 +9,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { useGetMemberQuery } from "../../../redux/service/memberService";
+// import { useGetMemberQuery } from "../../../redux/service/memberService";
 import TextField from "@mui/material/TextField";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -20,6 +20,7 @@ import * as yup from "yup";
 import dayjs from "dayjs";
 import {
   useCreateDepositMutation,
+  useGetMemberQuery,
   useUpdateDepositMutation,
 } from "../../../redux/service/depositService";
 import { MenuItem } from "@mui/material";
@@ -34,9 +35,10 @@ const DepositCreateUpdate = ({
   defaulValues,
   setDefaultValues,
   titleName,
+  pageQuery,
 }) => {
   // get member
-  const { data } = useGetMemberQuery();
+  const { data } = useGetMemberQuery(pageQuery);
   // create deposit
   const [
     createDeposit,
@@ -80,7 +82,6 @@ const DepositCreateUpdate = ({
         depositDate: value?.depositDate,
       };
       updateDeposit({ postBody: updateData, id: value?._id });
-      console.log(updateData);
     } else {
       const createData = {
         member: value?.member,

@@ -1,5 +1,4 @@
 // deposit service
-import { json } from "react-router-dom";
 import { apiService } from "../api/apiService";
 
 export const depositService = apiService.injectEndpoints({
@@ -7,7 +6,14 @@ export const depositService = apiService.injectEndpoints({
     getDeposit: builder.query({
       query: (page) => ({
         url: `deposit?page=${page}&limit=${10}`,
-        // url:"deposit"
+        // url: "deposit",
+        method: "GET",
+      }),
+    }),
+
+    getMember: builder.query({
+      query: (page) => ({
+        url: `member?page=${page}&limit=${10}`,
         method: "GET",
       }),
     }),
@@ -22,7 +28,6 @@ export const depositService = apiService.injectEndpoints({
       onQueryStarted(_arg, { dispatch, queryFulfilled }) {
         queryFulfilled.then(({ data }) => {
           console.log(data);
-
           dispatch(
             apiService.util.updateQueryData(
               "getDeposit",
@@ -73,4 +78,5 @@ export const {
   useDeleteDepositMutation,
   useUpdateDepositMutation,
   useGetDepositQuery,
+  useGetMemberQuery,
 } = depositService;

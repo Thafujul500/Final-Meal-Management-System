@@ -28,7 +28,6 @@ function Member() {
       Header: "Room Number",
       accessor: "roomNumber",
     },
-
     {
       Header: "CreatedAt",
       accessor: "createdAt",

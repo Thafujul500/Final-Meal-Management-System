@@ -9,99 +9,52 @@ import FastfoodIcon from "@mui/icons-material/Fastfood";
 import SummarizeIcon from "@mui/icons-material/Summarize";
 import { NavLink } from "react-router-dom";
 
+const navItems = [
+  { to: "/", icon: <DashboardIcon />, label: "Dashboard" },
+  { to: "/member", icon: <PeopleAltIcon />, label: "Members" },
+  { to: "/deposit", icon: <MonetizationOnIcon />, label: "Deposit" },
+  { to: "/market", icon: <LocalGroceryStoreIcon />, label: "Market" },
+  { to: "/meal", icon: <FastfoodIcon />, label: "Meal" },
+  { to: "/summary", icon: <SummarizeIcon />, label: "Summary" },
+];
+
 function Collapse() {
   return (
-    <div>
-      <Box
+    <Box
+      sx={{
+        width: "70px",
+        height: "100vh",
+        position: "fixed",
+        top: "0px",
+        left: "0px",
+        backgroundColor: "#70c4bc",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <RestaurantIcon
         sx={{
-          width: "70px",
-          height: "100vh",
-          backgroundColor: "gray",
-          position: "static",
-          left: "0px",
-          display: "flex",
-          flexDirection: "column",
-          position: "fixed",
-          top: "0px",
-          backgroundColor: "#70c4bc",
+          marginTop: "20px",
+          marginBottom: "18px",
+          marginLeft: "18px",
         }}
-      >
-        <RestaurantIcon
-          sx={{
-            marginTop: "20px",
-            marginBottom: "18px",
-            marginLeft: "18px",
-          }}
-        />
-        <NavLink to="/" style={{ textDecoration: "none", color: "black" }}>
-          <DashboardIcon
-            sx={{
-              marginTop: "18px",
-              marginBottom: "18px",
-              marginLeft: "18px",
-            }}
-          />
-        </NavLink>
+      />
+      {navItems.map((item, index) => (
         <NavLink
-          to="/member"
+          key={index}
+          to={item.to}
           style={{ textDecoration: "none", color: "black" }}
         >
-          <PeopleAltIcon
-            sx={{
+          {React.cloneElement(item.icon, {
+            sx: {
               marginTop: "18px",
               marginBottom: "18px",
               marginLeft: "18px",
-            }}
-          />
+            },
+          })}
         </NavLink>
-
-        <NavLink
-          to="/deposit"
-          style={{ textDecoration: "none", color: "black" }}
-        >
-          <MonetizationOnIcon
-            sx={{
-              marginTop: "18px",
-              marginBottom: "18px",
-              marginLeft: "18px",
-            }}
-          />
-        </NavLink>
-        <NavLink
-          to="/market"
-          style={{ textDecoration: "none", color: "black" }}
-        >
-          <LocalGroceryStoreIcon
-            sx={{
-              marginTop: "18px",
-              marginBottom: "18px",
-              marginLeft: "18px",
-            }}
-          />
-        </NavLink>
-        <NavLink to="/meal" style={{ textDecoration: "none", color: "black" }}>
-          <FastfoodIcon
-            sx={{
-              marginTop: "18px",
-              marginBottom: "18px",
-              marginLeft: "18px",
-            }}
-          />
-        </NavLink>
-        <NavLink
-          to="/summary"
-          style={{ textDecoration: "none", color: "black" }}
-        >
-          <SummarizeIcon
-            sx={{
-              marginTop: "18px",
-              marginBottom: "18px",
-              marginLeft: "18px",
-            }}
-          />
-        </NavLink>
-      </Box>
-    </div>
+      ))}
+    </Box>
   );
 }
 

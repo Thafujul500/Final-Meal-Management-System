@@ -109,9 +109,9 @@ const Table = ({ value, column, pageQuery, setPageQuery, pagination }) => {
         {...getTableProps()}
       >
         <thead>
-          {headerGroups?.map((headerGroup, i) => (
+          {headerGroups?.map((headerGroup, index) => (
             <tr
-              key={i}
+              key={index}
               style={{ height: "50px" }}
               {...headerGroup.getHeaderGroupProps()}
             >
@@ -141,10 +141,10 @@ const Table = ({ value, column, pageQuery, setPageQuery, pagination }) => {
           style={{ backgroundColor: "#D1E7DD", textAlign: "center" }}
           {...getTableBodyProps()}
         >
-          {page?.map((row, i) => {
+          {page?.map((row, index) => {
             prepareRow(row);
             return (
-              <tr key={i} style={{ height: "50px" }} {...row.getRowProps()}>
+              <tr key={index} style={{ height: "50px" }} {...row.getRowProps()}>
                 {row.cells.map((cell, i) => (
                   <td key={i} {...cell.getCellProps()}>
                     {cell.render("Cell")}

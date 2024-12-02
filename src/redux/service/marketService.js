@@ -4,9 +4,15 @@ import { apiService } from "../api/apiService";
 export const marketService = apiService.injectEndpoints({
   endpoints: (builder) => ({
     getMarket: builder.query({
-      query: () => ({
-        // url: `market?page=${page}&limit=${10}`,
-        url: "market",
+      query: (page) => ({
+        url: `market?page=${page}&limit=${10}`,
+        // url: "market",
+        method: "GET",
+      }),
+    }),
+    getMember: builder.query({
+      query: (page) => ({
+        url: `deposit?page=${page}&limit=${10}`,
         method: "GET",
       }),
     }),
@@ -23,7 +29,6 @@ export const marketService = apiService.injectEndpoints({
         queryFulfilled
           .then(({ data }) => {
             console.log(data);
-
             dispatch(
               apiService.util.updateQueryData(
                 "getMarket",
@@ -107,4 +112,5 @@ export const {
   useDeleteMarketMutation,
   useCreteMarketMutation,
   useUpdateMarketMutation,
+  useGetMemberQuery,
 } = marketService;

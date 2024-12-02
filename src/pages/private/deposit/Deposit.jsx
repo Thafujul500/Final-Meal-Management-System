@@ -2,10 +2,11 @@ import * as React from "react";
 import {
   useDeleteDepositMutation,
   useGetDepositQuery,
+  useGetMemberQuery,
 } from "../../../redux/service/depositService";
 import Table from "../../../components/Table";
 import dayjs from "dayjs";
-import { useGetMemberQuery } from "../../../redux/service/memberService";
+// import { useGetMemberQuery } from "../../../redux/service/memberService";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import DepositCreateUpdate from "./DepositCreateUpdate";
@@ -20,7 +21,8 @@ export const Deposit = () => {
   const pagination = data?.data?.pagination;
 
   // get member
-  const { data: memberData } = useGetMemberQuery();
+  // const { data: memberData } = useGetMemberQuery();
+  const { data: memberData } = useGetMemberQuery(pageQuery);
   // delete deposit
   const [deleteDeposit] = useDeleteDepositMutation();
 
@@ -31,7 +33,7 @@ export const Deposit = () => {
     depositDate: new Date(),
   };
 
-  // locak storage
+  // local storage
   const [defaulValues, setDefaultValues] = React.useState(defaultValue);
   const [edit, setEdit] = React.useState(false);
   const [titleName, setTitleName] = React.useState("");
@@ -158,6 +160,7 @@ export const Deposit = () => {
         edit={edit}
         setEdit={setEdit}
         titleName={titleName}
+        pageQuery={pageQuery}
       />
     </div>
   );

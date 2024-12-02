@@ -1,7 +1,5 @@
 // meal service
-
 import { apiService } from "../api/apiService";
-
 export const mealSearvice = apiService.injectEndpoints({
   endpoints: (builder) => ({
     getMeal: builder.query({

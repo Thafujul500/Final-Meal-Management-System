@@ -18,10 +18,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import dayjs from "dayjs";
 import { MenuItem } from "@mui/material";
-import { useGetMemberQuery } from "../../../redux/service/memberService";
 import {
   useCreteMarketMutation,
   useUpdateMarketMutation,
+  useGetMemberQuery,
 } from "../../../redux/service/marketService";
 import SmallLoading from "../../SmallLoading";
 import { defaultvalue } from "./Market";
@@ -34,9 +34,10 @@ function MarketCreateUpdate({
   setEditData,
   defaultvalues,
   setDefaultvalues,
+  pageQuery,
 }) {
   // get member
-  const { data } = useGetMemberQuery();
+  const { data } = useGetMemberQuery(pageQuery);
   // create market
   const [
     crateMarket,
